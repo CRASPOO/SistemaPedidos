@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/product")
-public class OrderController {
+public class ProductController {
 
     @Autowired
     private ProductRepository repository;
