@@ -17,11 +17,7 @@ public class OrderController {
     private ProductRepository repository;
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/hello")
-    public String imprimir(){
 
-        return "HELLO";
-    }
     @GetMapping
     public List<ProductResponseDTO> getAll(){
         List<ProductResponseDTO> productlist = repository.findAll().stream().map(ProductResponseDTO::new).toList();
