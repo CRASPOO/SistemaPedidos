@@ -20,7 +20,7 @@ public class OrderController {
     @GetMapping("/hello")
     public String imprimir(){
 
-        return "HELLO";
+        return "HELL2";
     }
     @GetMapping
     public List<ProductResponseDTO> getAll(){
