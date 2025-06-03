@@ -1,15 +1,13 @@
 package com.example.order.product;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 @Table(name = "product")
 @Entity(name = "product")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -21,7 +19,7 @@ public class Product {
     private Integer price;
     private Integer category;
     private String description;
-    private String Image;
+    private String image;
     private Boolean active;
 
     public Product(ProductRequestDTO data){
@@ -29,7 +27,7 @@ public class Product {
         this.price = data.price();
         this.category = data.category();
         this.description = data.description();
-        this.Image = data.Image();
+        this.image = data.image();
         this.active = data.active();
 
     }
