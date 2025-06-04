@@ -6,6 +6,9 @@ import com.example.order.application.shared.CategoryResponseDTO;
 import com.example.order.shared.exceptions.CategoryNotFoundException;
 //import com.example.order.shared.CategoryRequestDTO; // Se você tivesse operações de POST/PUT
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +27,12 @@ public class CategoryController {
         this.categoryUseCase = categoryUseCase;
     }
 
+    @Operation(description = "Retorna lista de todas as categorias")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna lista de categorias"),
+            @ApiResponse(responseCode = "400", description = "Não existem categorias")
+    })
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<CategoryResponseDTO> getAll(){
@@ -33,28 +42,5 @@ public class CategoryController {
                 .collect(Collectors.toList());
     }
 
-    // Exemplo de como você adicionaria um POST (se a necessidade surgir)
-    /*
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public CategoryResponseDTO createCategory(@RequestBody CategoryRequestDTO request) {
-        Category newCategory = new Category(request.name());
-        Category createdCategory = categoryUseCase.createCategory(newCategory);
-        return CategoryResponseDTO.fromDomain(createdCategory);
-    }
-    */
 
-    // Exemplo de como você adicionaria um GET por ID (se a necessidade surgir)
-    /*
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponseDTO> getCategoryById(@PathVariable Long id) {
-        try {
-            Category category = categoryUseCase.getCategoryById(id)
-                    .orElseThrow(() -> new CategoryNotFoundException("Category not found with ID: " + id));
-            return ResponseEntity.ok(CategoryResponseDTO.fromDomain(category));
-        } catch (CategoryNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-    */
 }

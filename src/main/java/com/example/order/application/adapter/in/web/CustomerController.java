@@ -7,6 +7,9 @@ import com.example.order.application.shared.CustomerRequestDTO;
 import com.example.order.application.shared.CustomerResponseDTO;
 import com.example.order.shared.exceptions.CustomerNotFoundException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.transaction.Transactional; // Manter aqui se usar transações controladas pelo Spring MVC para o endpoint
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,12 +29,24 @@ public class CustomerController {
         this.customerUseCase = customerUseCase;
     }
 
+    @Operation(description = "Retorna a lista de clientes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna lista de clientes"),
+            @ApiResponse(responseCode = "400", description = "Não existe clientes")
+    })
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<CustomerResponseDTO> getAll(){
         List<Customer> customers = customerUseCase.getAllCustomers();
         return customers.stream().map(CustomerResponseDTO::fromDomain).collect(Collectors.toList());
     }
+
+    @Operation(description = "Consulta Cliente pelo CPF")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna cliente"),
+            @ApiResponse(responseCode = "400", description = "Não existe clientes")
+    })
 
     @GetMapping("/cpf/{cpf}") // Endpoint mais claro para buscar por CPF
     public ResponseEntity<CustomerResponseDTO> getByCpf(@PathVariable Long cpf){
@@ -43,6 +58,12 @@ public class CustomerController {
             return ResponseEntity.notFound().build(); // Retorna 404 Not Found
         }
     }
+
+    @Operation(description = "Insere um novo cliente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna novo cliente"),
+            @ApiResponse(responseCode = "400", description = "Não foi possível inserir o cliente")
+    })
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
@@ -58,6 +79,12 @@ public class CustomerController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage()); // Ex: 409 Conflict para CPF duplicado
         }
     }
+
+    @Operation(description = "Altera dados do clientes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna dados do cliente alterado"),
+            @ApiResponse(responseCode = "400", description = "Não foi possível alterar os dados do cliente")
+    })
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping

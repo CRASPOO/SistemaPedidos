@@ -7,6 +7,9 @@ import com.example.order.application.shared.OrderRequestDTO;
 import com.example.order.application.shared.OrderResponseDTO;
 import com.example.order.application.shared.exceptions.OrderNotFoundException; // Sua exceção de domínio
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +28,12 @@ public class OrderController {
         this.orderUseCase = orderUseCase;
     }
 
+    @Operation(description = "Lista de todos os pedidos")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna lista de pedidos"),
+            @ApiResponse(responseCode = "400", description = "Não existe pedido")
+    })
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
@@ -32,12 +41,26 @@ public class OrderController {
         return ResponseEntity.ok(orders.stream().map(OrderResponseDTO::fromDomain).collect(Collectors.toList()));
     }
 
+
+    @Operation(description = "Lista os pedidos por status")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna lista de pedidos por status"),
+            @ApiResponse(responseCode = "400", description = "Não existe o pedido")
+    })
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/step/{step}")
     public ResponseEntity<List<OrderResponseDTO>> getOrdersByStep(@PathVariable String step) {
         List<Order> orders = orderUseCase.getOrdersByStep(step); // Retorna o modelo de domínio
         return ResponseEntity.ok(orders.stream().map(OrderResponseDTO::fromDomain).collect(Collectors.toList()));
     }
+
+
+    @Operation(description = "Cria um novo pedido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna novo pedido criado"),
+            @ApiResponse(responseCode = "400", description = "Quando não é possível inserir o pedido")
+    })
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
@@ -49,6 +72,12 @@ public class OrderController {
         // Mapeia o modelo de domínio resultante para DTO de resposta
         return OrderResponseDTO.fromDomain(createdOrder);
     }
+
+    @Operation(description = "Avança o status do pedido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna pedido no novo status"),
+            @ApiResponse(responseCode = "400", description = "Não existe o pedido")
+    })
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/next/{id}")
@@ -63,6 +92,12 @@ public class OrderController {
             return ResponseEntity.badRequest().body(new OrderResponseDTO(id, e.getMessage())); // 400 Bad Request
         }
     }
+
+    @Operation(description = "Efetua o cancelamento do pedido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retorna pedido cancelado"),
+            @ApiResponse(responseCode = "400", description = "Não existe o pedido")
+    })
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
