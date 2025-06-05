@@ -86,7 +86,7 @@ INSERT INTO customer (name, email, cpf) VALUES
 -- DROP TABLE IF EXISTS "order" CASCADE; -- Descomente esta linha se quiser recriar a tabela do zero.
                                         -- Note as aspas duplas, pois 'order' é uma palavra reservada em SQL.
 
-CREATE TABLE "order" (
+CREATE TABLE "orderqueue" (
     id BIGSERIAL PRIMARY KEY,
     idcustomer BIGINT NOT NULL,
     step VARCHAR(50) NOT NULL,
@@ -101,7 +101,7 @@ CREATE TABLE "order" (
 
 -- DML: Inserção de Dados na Tabela `order`
 
-INSERT INTO "order" (idcustomer, step, date, time, price, details) VALUES
+INSERT INTO "orderqueue" (idcustomer, step, date, time, price, details) VALUES
 (1, 'Recebido', '2025-06-04', '14:30:00', 7500, '1 Cheeseburger Clássico, 1 Batata Frita Grande, 1 Refrigerante Lata'),
 (2, 'Recebido', '2025-06-04', '15:15:00', 4300, '1 Sanduíche Natural de Frango, 1 Suco Natural de Laranja, 1 Mousse de Maracujá');
 
