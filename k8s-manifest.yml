@@ -1,0 +1,92 @@
+# ---
+# 1. Deployment para o Banco de Dados (db)
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-db
+  template:
+    metadata:
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+        - name: postgres-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: spoospoo
+            - name: POSTGRES_DB
+              value: ordersys
+
+---
+# 2. Service para o Banco de Dados (db-service)
+# ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  selector:
+    app: postgres-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
+---
+# 3. Deployment para a sua Aplicação (api)
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+        - name: spring-app
+          image: order:latest # Usa a imagem que você construiu
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          env:
+            # A url do banco de dados usa o NOME DO SERVIÇO do K8s
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://db-service:5432/ordersys
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: spoospoo
+
+---
+# 4. Service para a sua Aplicação (api)
+# ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-app-service
+spec:
+  selector:
+    app: api
+  ports:
+    - protocol: TCP
+      port: 8080 # A porta externa que você vai acessar (localhost:8080)
+      targetPort: 8080 # A porta interna do container
+  type: LoadBalancer # Ou NodePort, para testes locais

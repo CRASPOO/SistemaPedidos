@@ -99,9 +99,11 @@ CREATE TABLE "orderqueue" (
         REFERENCES customer (id)
 );
 
+ALTER TABLE IF EXISTS public.orderqueue
+    ADD COLUMN payment_status character varying(255) COLLATE pg_catalog."default";
 -- DML: Inserção de Dados na Tabela `order`
 
 INSERT INTO "orderqueue" (idcustomer, step, date, time, price, details) VALUES
-(1, 'Recebido', '2025-06-04', '14:30:00', 7500, '1 Cheeseburger Clássico, 1 Batata Frita Grande, 1 Refrigerante Lata'),
-(2, 'Recebido', '2025-06-04', '15:15:00', 4300, '1 Sanduíche Natural de Frango, 1 Suco Natural de Laranja, 1 Mousse de Maracujá');
+(1, 'RECEBIDO', '2025-06-04', '14:30:00', 7500, '1 Cheeseburger Clássico, 1 Batata Frita Grande, 1 Refrigerante Lata'),
+(2, 'RECEBIDO', '2025-06-04', '15:15:00', 4300, '1 Sanduíche Natural de Frango, 1 Suco Natural de Laranja, 1 Mousse de Maracujá');
 
