@@ -1,7 +1,6 @@
-package com.example.order.application.ports.out;
+package com.example.order.webhook;
 
 import com.example.order.domain.entities.Order;
-import com.example.order.infrastructure.adapters.in.web.Dtos.MercadoPagoPaymentResponseDTO;
 
 
 public interface PaymentServicePort {

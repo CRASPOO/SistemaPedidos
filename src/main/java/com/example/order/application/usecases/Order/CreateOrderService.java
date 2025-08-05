@@ -3,10 +3,10 @@ package com.example.order.application.usecases.Order;
 
 import com.example.order.application.ports.in.Order.CreateOrderUseCase;
 import com.example.order.application.ports.out.OrderRepositoryPort;
-import com.example.order.application.ports.out.PaymentServicePort;
-import com.example.order.application.usecases.ProcessPaymentWebhookUseCase;
+import com.example.order.webhook.PaymentServicePort;
+import com.example.order.webhook.ProcessPaymentWebhookUseCase;
 import com.example.order.domain.entities.Order;
-import com.example.order.infrastructure.adapters.in.web.Dtos.MercadoPagoPaymentResponseDTO;
+import com.example.order.webhook.MercadoPagoPaymentResponseDTO;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
@@ -34,23 +34,11 @@ public class CreateOrderService implements CreateOrderUseCase {
 
 
         MercadoPagoPaymentResponseDTO qrCodeResponse = paymentServicePort.createQrCodePayment(savedOrder);
-        System.out.println("-> WEBHOOK MOCK: Simulará atualização para o pedido " + savedOrder.getId() + " com status " + qrCodeResponse.getStatus() + " em 10 segundos...");
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        // AQUI NÃO É O LUGAR IDEAL para chamar o webhook, pois ele deve ser assíncrono.
-        // A chamada deveria vir do serviço de pagamento.
-        // Se você insistir em chamar aqui, o comportamento será síncrono.
+
         processPaymentWebhookUseCase.execute(savedOrder.getId(), qrCodeResponse.getStatus());
 
-        /* Código para Salvar QRCODE NA TABELA
-        if (qrCodeResponse != null && qrCodeResponse.getQrData() != null) {
-            savedOrder.setQrCodeData(qrCodeResponse.getQrData());
-            orderRepositoryPort.save(savedOrder);
-        }*/
-        System.out.println("-> WEBHOOK MOCK: Finaliza atualização do perdido " + savedOrder.getId() );
+
+
         return qrCodeResponse;
     }
 }

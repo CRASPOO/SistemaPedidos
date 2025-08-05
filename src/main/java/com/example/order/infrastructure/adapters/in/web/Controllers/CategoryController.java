@@ -10,12 +10,18 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/category")
+@CrossOrigin(origins = "null")
 public class CategoryController {
 
     private final GetAllCategoriesUseCase getAllCategoriesUseCase;
 
     public CategoryController(GetAllCategoriesUseCase getAllCategoriesUseCase) {
         this.getAllCategoriesUseCase = getAllCategoriesUseCase;
+    }
+
+    @GetMapping("/health")
+    public String healthCheck() {
+        return " Aplicação OK ! ";
     }
 
     @GetMapping

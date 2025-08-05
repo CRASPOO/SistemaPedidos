@@ -1,13 +1,14 @@
 // src/main/java/com/example/order/infrastructure/adapters/in/web/OrderController.java
 package com.example.order.infrastructure.adapters.in.web.Controllers;
-import com.example.order.application.ports.in.FindOrderUseCase;
+
+import com.example.order.application.ports.in.Order.FindOrderUseCase;
 import com.example.order.application.ports.in.Order.*;
-import com.example.order.application.usecases.ProcessPaymentWebhookUseCase;
-import com.example.order.domain.entities.Order;
-import com.example.order.infrastructure.adapters.in.web.Dtos.MercadoPagoPaymentResponseDTO;
+
+import com.example.order.domain.entities.*;
+import com.example.order.webhook.MercadoPagoPaymentResponseDTO;
 import com.example.order.infrastructure.adapters.in.web.Dtos.OrderRequestDTO;
 import com.example.order.infrastructure.adapters.in.web.Dtos.OrderResponseDTO;
-import com.example.order.infrastructure.adapters.in.web.Dtos.PaymentWebhookRequestDTO;
+
 import com.example.order.shared.exceptions.OrderNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/order")
+@CrossOrigin(origins = "null")
 public class OrderController {
 
     private final GetAllOrdersUseCase getAllOrdersUseCase;
@@ -29,7 +31,7 @@ public class OrderController {
     private final CreateOrderUseCase createOrderUseCase;
     private final AdvanceOrderStatusUseCase advanceOrderStatusUseCase;
     private final CancelOrderUseCase cancelOrderUseCase;
-    private final ProcessPaymentWebhookUseCase processPaymentWebhookUseCase;
+
     private final FindOrderUseCase findOrderUseCase;
 
 
@@ -37,14 +39,13 @@ public class OrderController {
                            GetOrdersByStepUseCase getOrdersByStepUseCase,
                            CreateOrderUseCase createOrderUseCase,
                            AdvanceOrderStatusUseCase advanceOrderStatusUseCase,
-                           CancelOrderUseCase cancelOrderUseCase, ProcessPaymentWebhookUseCase processPaymentWebhookUseCase, FindOrderUseCase findOrderUseCase) {
+                           CancelOrderUseCase cancelOrderUseCase, FindOrderUseCase findOrderUseCase) {
         this.getAllOrdersUseCase = getAllOrdersUseCase;
         this.getOrdersByStepUseCase = getOrdersByStepUseCase;
         this.createOrderUseCase = createOrderUseCase;
         this.advanceOrderStatusUseCase = advanceOrderStatusUseCase;
         this.cancelOrderUseCase = cancelOrderUseCase;
-        this.processPaymentWebhookUseCase = processPaymentWebhookUseCase;
-        this.findOrderUseCase = findOrderUseCase;
+                this.findOrderUseCase = findOrderUseCase;
     }
 
     @Operation(description = "Lista de todos os pedidos")
@@ -122,21 +123,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/webhook/payment")
-    @Operation(description = "Webhook para receber confirmação de pagamento")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Notificação de pagamento processada com sucesso"),
-            @ApiResponse(responseCode = "404", description = "Pedido não encontrado para a notificação")
-    })
-    public ResponseEntity<Void> receivePaymentWebhook(@RequestBody PaymentWebhookRequestDTO data) {
-        try {
-            processPaymentWebhookUseCase.execute(data.getOrderId(), data.getPaymentStatus());
-            return ResponseEntity.ok().build(); // Retorna 200 OK para o serviço de pagamento
-        } catch (OrderNotFoundException e) {
-            // Em caso de erro, é uma boa prática notificar o serviço de pagamento com um 404
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        }
-    }
+
     @GetMapping("/pagamento/{orderId}")
     @Operation(summary = "Consulta o status de pagamento de um pedido por ID")
     @ApiResponses(value = {

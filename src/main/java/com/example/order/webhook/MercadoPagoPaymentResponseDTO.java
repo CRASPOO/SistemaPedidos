@@ -1,4 +1,4 @@
-package com.example.order.infrastructure.adapters.in.web.Dtos;
+package com.example.order.webhook;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

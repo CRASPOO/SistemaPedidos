@@ -1,5 +1,5 @@
 // src/main/java/com/example/order/infrastructure/adapters/in/web/dtos/PaymentWebhookRequestDTO.java
-package com.example.order.infrastructure.adapters.in.web.Dtos;
+package com.example.order.webhook;
 
 public class PaymentWebhookRequestDTO {
     private Long orderId;

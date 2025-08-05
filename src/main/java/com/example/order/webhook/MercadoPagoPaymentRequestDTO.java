@@ -1,5 +1,6 @@
-package com.example.order.infrastructure.adapters.in.web.Dtos;
+package com.example.order.webhook;
 
+import com.example.order.infrastructure.adapters.in.web.Dtos.MercadoPagoItemDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 import java.util.List;

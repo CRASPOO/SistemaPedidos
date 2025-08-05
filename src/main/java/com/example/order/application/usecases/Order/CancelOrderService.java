@@ -18,10 +18,10 @@ public class CancelOrderService implements CancelOrderUseCase {
     public Order execute(Long orderId) {
         Order order = orderRepositoryPort.findById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado com ID: " + orderId));
-        if ("Cancelado".equals(order.getStep())) {
+        if ("CANCELADO".equals(order.getStep())) {
             throw new IllegalArgumentException("Pedido Já Cancelado.");
         }
-        order.setStep("Cancelado");
+        order.setStep("CANCELADO");
 
         return orderRepositoryPort.save(order);
     }

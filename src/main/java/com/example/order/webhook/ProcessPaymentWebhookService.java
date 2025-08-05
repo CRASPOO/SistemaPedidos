@@ -1,8 +1,7 @@
 // src/main/java/com/example/order/application/ports/in/ProcessPaymentWebhookUseCase.java
-package com.example.order.application.ports.in;
+package com.example.order.webhook;
 
 import com.example.order.application.ports.out.OrderRepositoryPort;
-import com.example.order.application.usecases.ProcessPaymentWebhookUseCase;
 import com.example.order.domain.entities.Order;
 import com.example.order.shared.exceptions.OrderNotFoundException;
 import jakarta.transaction.Transactional;

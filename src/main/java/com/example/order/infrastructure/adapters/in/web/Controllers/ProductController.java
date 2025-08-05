@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin(origins = "null")
 public class ProductController {
 
     private final GetAllProductsUseCase getAllProductsUseCase;

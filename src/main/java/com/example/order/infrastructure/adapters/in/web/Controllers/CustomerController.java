@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin(origins = "null")
 public class CustomerController {
 
     private final GetAllCustomersUseCase getAllCustomersUseCase;

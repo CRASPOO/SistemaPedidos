@@ -1,9 +1,6 @@
-package com.example.order.application.usecases.Order;
+package com.example.order.webhook;
 
-import com.example.order.application.ports.out.PaymentServicePort;
 import com.example.order.domain.entities.Order;
-import com.example.order.infrastructure.adapters.in.web.Dtos.MercadoPagoPaymentRequestDTO;
-import com.example.order.infrastructure.adapters.in.web.Dtos.MercadoPagoPaymentResponseDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.*;

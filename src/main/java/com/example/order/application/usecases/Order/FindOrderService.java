@@ -1,7 +1,7 @@
 // src/main/java/com/example/order/application/usecases/FindOrderService.java
-package com.example.order.application.usecases;
+package com.example.order.application.usecases.Order;
 
-import com.example.order.application.ports.in.FindOrderUseCase;
+import com.example.order.application.ports.in.Order.FindOrderUseCase;
 import com.example.order.application.ports.out.OrderRepositoryPort;
 import com.example.order.domain.entities.Order;
 import org.springframework.stereotype.Service;
