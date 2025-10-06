@@ -34,7 +34,8 @@
               core.setOutput('subject', payload.sub);
 
         - name: Print Subject
-          run: echo "A identidade ('sub' claim) do token OIDC é: ${{ steps.get_subject.outputs.subject }}"
+          run: |
+            echo "A identidade ('sub' claim) do token OIDC é: ${{ steps.get_subject.outputs.subject }}"
           # --- ADICIONE ESTES DOIS PASSOS TEMPORÁRIOS --- debug1
 
         - name: Configurar credenciais AWS
