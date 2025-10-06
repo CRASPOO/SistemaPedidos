@@ -22,22 +22,6 @@
         - name: Checkout do código
           uses: actions/checkout@v3
 
-            # --- ADICIONE ESTES DOIS PASSOS TEMPORÁRIOS --- debug
-        - name: Debug OIDC Token Subject
-          uses: actions/github-script@v6
-          id: get_subject
-          with:
-            script: |
-              const token = await core.getIDToken('sts.amazonaws.com');
-              const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
-              console.log('Payload completo do Token OIDC:', payload);
-              core.setOutput('subject', payload.sub);
-
-        - name: Print Subject
-          run:
-            echo "A identidade ('sub' claim) do token OIDC é: ${{ steps.get_subject.outputs.subject }}"
-          # --- ADICIONE ESTES DOIS PASSOS TEMPORÁRIOS --- debug1
-
         - name: Configurar credenciais AWS
           uses: aws-actions/configure-aws-credentials@v4
           with:
