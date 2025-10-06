@@ -45,7 +45,7 @@
     deploy:
       name: Deploy no Kubernetes
       runs-on: ubuntu-latest
-      needs: build-and-push # Depende do job de build
+      needs: build-and-push # Depende do job de build l
       if: github.ref == 'refs/heads/main' && github.event_name == 'push' # Roda apenas no merge para a main
 
       steps:
