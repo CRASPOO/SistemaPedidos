@@ -3,7 +3,7 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline
 COPY src ./src
-RUN mvn package -DskipTestes
+RUN mvn package -Dmaven.test.skip=true
 FROM openjdk:17-slim
 WORKDIR /app
 COPY --from=builder /app/target/cardapio-0.0.1-SNAPSHOT.jar ./app.jar
