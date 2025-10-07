@@ -28,6 +28,10 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      # --- ADICIONE ESTE PASSO DE DEPURAÇÃO ---
+      - name: DEBUG - Verificar Identidade da AWS no Pipeline
+        run: aws sts get-caller-identity
+
       - name: Login no Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
