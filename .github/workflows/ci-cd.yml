@@ -72,7 +72,7 @@ jobs:
       - name: Configurar kubectl para o EKS
         run: aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name eks-spoo-ent9-backend
 
-      # --- MUDANÇA 2: Ajustado o comando 'sed' ---
+      # --- MUDANÇA 3: Ajustado o comando 'sed' ---
       - name: Atualizar manifesto com a nova imagem
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
