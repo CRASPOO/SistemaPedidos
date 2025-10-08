@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: db-config
-data:
-  POSTGRES_URL: jdbc:postgresql://db-service:5432/ordersys
-  POSTGRES_DB: ordersys
