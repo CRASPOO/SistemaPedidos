@@ -19,7 +19,7 @@ public class CategoryService implements GetAllCategoriesUseCase {
 
     @Override
     public List<Category> execute() {
-        // Lógica de negócio específica, se houver, ficaria aqui
+        // Lógica de  negócio específica, se houver, ficaria aqui
         return categoryRepositoryPort.findAll();
     }
 }
