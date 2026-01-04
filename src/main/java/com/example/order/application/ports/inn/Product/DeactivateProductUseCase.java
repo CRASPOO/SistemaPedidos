@@ -1,4 +1,4 @@
 // src/main/java/com/example/order/application/ports/in/DeactivateProductUseCase.java
-package com.example.order.application.ports.in.Product;
+package com.example.order.application.ports.inn.Product;
 
 public interface DeactivateProductUseCase { void execute(Long productId); }

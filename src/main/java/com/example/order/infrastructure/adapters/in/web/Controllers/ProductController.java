@@ -1,7 +1,7 @@
 // src/main/java/com/example/order/infrastructure/adapters/in/web/ProductController.java
 package com.example.order.infrastructure.adapters.in.web.Controllers;
 
-import com.example.order.application.ports.in.Product.*;
+import com.example.order.application.ports.inn.Product.*;
 import com.example.order.domain.entities.Product;
 import com.example.order.infrastructure.adapters.in.web.Dtos.ProductRequestDTO;
 import com.example.order.infrastructure.adapters.in.web.Dtos.ProductResponseDTO;

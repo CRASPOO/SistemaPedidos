@@ -1,5 +1,5 @@
 // src/main/java/com/example/order/application/ports/in/GetAllCategoriesUseCase.java
-package com.example.order.application.ports.in.Category;
+package com.example.order.application.ports.inn.Category;
 
 import com.example.order.domain.entities.Category;
 import java.util.List;

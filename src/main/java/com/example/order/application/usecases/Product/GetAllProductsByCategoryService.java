@@ -1,7 +1,7 @@
 // src/main/java/com/example/order/application/usecases/GetAllProductsByCategoryService.java
 package com.example.order.application.usecases.Product;
 
-import com.example.order.application.ports.in.Product.GetAllProductsByCategoryUseCase;
+import com.example.order.application.ports.inn.Product.GetAllProductsByCategoryUseCase;
 import com.example.order.application.ports.out.ProductRepositoryPort;
 import com.example.order.domain.entities.Product;
 import org.springframework.stereotype.Service;

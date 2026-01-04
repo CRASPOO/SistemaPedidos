@@ -1,7 +1,7 @@
 // src/main/java/com/example/order/infrastructure/adapters/in/web/CategoryController.java
 package com.example.order.infrastructure.adapters.in.web.Controllers;
 
-import com.example.order.application.ports.in.Category.GetAllCategoriesUseCase;
+import com.example.order.application.ports.inn.Category.GetAllCategoriesUseCase;
 import com.example.order.domain.entities.Category;
 import com.example.order.infrastructure.adapters.in.web.Dtos.CategoryResponseDTO;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 // src/main/java/com/example/order/application/usecases/UpdateProductService.java
         package com.example.order.application.usecases.Product;
 
-import com.example.order.application.ports.in.Product.UpdateProductUseCase;
+import com.example.order.application.ports.inn.Product.UpdateProductUseCase;
 import com.example.order.application.ports.out.ProductRepositoryPort;
 import com.example.order.domain.entities.Product;
 import com.example.order.shared.exceptions.ProductNotFoundException;
